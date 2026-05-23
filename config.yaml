@@ -1,0 +1,46 @@
+# config.yaml — PneumoCheck (PyTorch)
+
+model:
+  architecture : resnet50
+  img_size     : 224
+  n_classes    : 3
+  classes      : [NORMAL, BACTERIA, VIRUS]
+  normalize:
+    mean       : [0.485, 0.456, 0.406]
+    std        : [0.229, 0.224, 0.225]
+
+training:
+  batch_size   : 32
+  seed         : 42
+  num_workers  : 2
+  phase1:
+    epochs     : 15
+    lr         : 0.0001
+    patience   : 6
+    unfreeze_top: 0
+  phase2:
+    epochs     : 25
+    lr         : 0.00001
+    patience   : 6
+    unfreeze_top: 3
+
+augmentation:
+  resize_pad   : 244
+  crop_size    : 224
+  scale_min    : 0.85
+  rotation     : 10
+  horizontal_flip: true
+  brightness   : 0.2
+  contrast     : 0.1
+
+paths:
+  train_dir : data/chest_xray/train
+  val_dir   : data/chest_xray/val
+  test_dir  : data/chest_xray/test
+  model_dir : models/
+  log_dir   : logs/
+
+streamlit:
+  host      : localhost
+  port      : 8501
+  threshold : 0.70
